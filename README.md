@@ -9,6 +9,12 @@
 </div>
 <br>
 
+
+> [!NOTE]
+> This a fork of https://github.com/flexagoon/rounded-window-corners/ by @flexagoon, which is maintained. I am attempting to port this to cinnamon but it is not finished so expect it to not work.
+> If you want to contribute, download the contents of the src folder to a folder called `rounded-window-corners@fxgn` in `~/.local/share/cinnamon/extensions`. Then you can edit the code from there, reloading cinnamon after chaning things by doing Alt+F2, then pressing R, then pressing enter. You can do Super(Windows key)+L to open Melange/Looking Glass, then go to logs to see any errors.
+
+
 > [!NOTE]
 > This is the fork of the [original rounded-window-corners extension][14] by @yilozt, which is no longer maintained.
 
