@@ -22,13 +22,16 @@ const { _log, stackMsg } = require('./utils/log.js');
 const { init_settings, settings, uninit_settings } = require('./utils/settings.js');
 const UI = require('./utils/ui.js')//import * as UI from './utils/ui.js';
 // --------------------------------------------------------------- [end imports]
-class RoundedWindowCornersReborn extends Extension {
+
+function init() {}
+
+//class RoundedWindowCornersReborn extends Extension {
     // The methods of gnome-shell to monkey patch
     _orig_add_window;
     _orig_prep_workspace_swt;
     _orig_finish_workspace_swt;
     _services = null;
-    enable() {
+    function enable() {
         init_settings(this.getSettings());
         // Restore original methods, those methods will be restore when
         // extensions is disabled
@@ -211,7 +214,7 @@ class RoundedWindowCornersReborn extends Extension {
         });
         _log('Enabled');
     }
-    disable() {
+    function disable() {
         // Restore patched methods
         WindowPreview.prototype._addWindow = this._orig_add_window;
         WorkspaceAnimationController.prototype._prepareWorkspaceSwitch =
@@ -230,7 +233,7 @@ class RoundedWindowCornersReborn extends Extension {
         _log('Disabled');
         uninit_settings();
     }
-}
+//}
 /**
  * Copy shadow of rounded corners window and show it in overview.
  * This actor will be created when window preview has created for overview
