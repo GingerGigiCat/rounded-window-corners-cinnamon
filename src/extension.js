@@ -27,10 +27,11 @@ function init() {}
 
 //class RoundedWindowCornersReborn extends Extension {
     // The methods of gnome-shell to monkey patch
-    _orig_add_window;
-    _orig_prep_workspace_swt;
-    _orig_finish_workspace_swt;
-    _services = null;
+    Extension._orig_add_window;
+    Extension._orig_prep_workspace_swt;
+    Extension._orig_finish_workspace_swt;
+    Extension._services = null;
+
     function enable() {
         init_settings(this.getSettings());
         // Restore original methods, those methods will be restore when
@@ -214,6 +215,7 @@ function init() {}
         });
         _log('Enabled');
     }
+
     function disable() {
         // Restore patched methods
         WindowPreview.prototype._addWindow = this._orig_add_window;
