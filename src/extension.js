@@ -15,7 +15,7 @@ const Services = require('./dbus/services.js'); //import { Services } from './db
 const LinearFilterEffect = require('./effect/linear_filter_effect.js'); //import { LinearFilterEffect } from './effect/linear_filter_effect.js';
 //import { disableEffect, enableEffect } from './manager/event_manager.js';
 const disableEffect = require('./manager/event_manager.js').disableEffect;
-const enableEffect = require('./manager/event_manager.js').enableEffect; //TODO: Got to here
+const enableEffect = require('./manager/event_manager.js').enableEffect;
 const { connections } = require('./utils/connections.js'); 
 const { constants, SHADOW_PADDING } = require('./utils/constants.js');
 const { _log, stackMsg } = require('./utils/log.js');

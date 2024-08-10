@@ -19,7 +19,7 @@ const _log = require("./utils/log.js")._log;
 const settings = require("./utils/settings.js").settings; //import { settings } from '../utils/settings.js';
 const types = require("./utils/types.js"); //import * as types from '../utils/types.js';
 //import { WindowScaleFactor, computeWindowContentsOffset, getRoundedCornersCfg, get_rounded_corners_effect as getRoundedCornersEffect, shouldEnableEffect, } from '../utils/ui.js';
-const WindowScaleFactor = require("./utils/ui.js").WindowScaleFactor; //TODO: GOT HERE
+const WindowScaleFactor = require("./utils/ui.js").WindowScaleFactor;
 const computeWindowContentsOffset = require("./utils/ui.js").computeWindowContentsOffset;
 const getRoundedCornersCfg = require("./utils/ui.js").getRoundedCornersCfg;
 const getRoundedCornersEffect = require("./utils/ui.js").get_rounded_corners_effect;

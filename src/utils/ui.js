@@ -1,15 +1,19 @@
 // imports.gi
 const Gio = imports.gi.Gio; //import Gio from 'gi://Gio';
-const Meta = imports.gi.Meta; //import Meta from 'gi://Meta'; //TODO: GOT HERE
+const Meta = imports.gi.Meta; //import Meta from 'gi://Meta';
 // gnome modules
-import { Extension, gettext as _, } from 'resource:///org/gnome/shell/extensions/extension.js';
+//import { Extension, gettext as _, } from 'resource:///org/gnome/shell/extensions/extension.js';
+const Extension = imports.ui.extension.Extension
+const _ = imports.ui.extension.gettext
 // local modules
-import { ROUNDED_CORNERS_EFFECT } from './constants.js';
-import { load } from './io.js';
-import { _log, _logError } from './log.js';
-import { settings } from './settings.js';
+const ROUNDED_CORNERS_EFFECT = require('./utils/constants.js').ROUNDED_CORNERS_EFFECT; //import { ROUNDED_CORNERS_EFFECT } from './constants.js';
+const load = require('./utils/io.js').load; //import { load } from './io.js';
+//import { _log, _logError } from './log.js';
+const _log = require('./utils/log.js')._log;
+const _logError = require('./utils/log.js')._logError;
+const settings = require('./utils/settings.js').settings; //import { settings } from './settings.js';
 // --------------------------------------------------------------- [end imports]
-export const computeWindowContentsOffset = (meta_window) => {
+const computeWindowContentsOffset = (meta_window) => {
     const bufferRect = meta_window.get_buffer_rect();
     const frameRect = meta_window.get_frame_rect();
     return [
@@ -19,7 +23,7 @@ export const computeWindowContentsOffset = (meta_window) => {
         frameRect.height - bufferRect.height,
     ];
 };
-export var AppType;
+var AppType;
 (function (AppType) {
     AppType["LibHandy"] = "LibHandy";
     AppType["LibAdwaita"] = "LibAdwaita";
@@ -30,7 +34,7 @@ export var AppType;
  * corners effect to some window.
  * @returns Application Type: LibHandy | LibAdwaita | Other
  */
-export const getAppType = (meta_window) => {
+const getAppType = (meta_window) => {
     try {
         // May cause Permission error
         const contents = load(`/proc/${meta_window.get_pid()}/maps`);
@@ -51,7 +55,7 @@ export const getAppType = (meta_window) => {
  * Get scale factor of a Meta.window, if win is undefined, return
  * scale factor of current monitor
  */
-export const WindowScaleFactor = (win) => {
+const WindowScaleFactor = (win) => {
     const features = Gio.Settings.new('org.gnome.mutter').get_strv('experimental-features');
     // When enable fractional scale in Wayland, return 1
     if (Meta.is_wayland_compositor() &&
@@ -68,7 +72,7 @@ export const WindowScaleFactor = (win) => {
  * click in background
  * @param menu - BackgroundMenu to add
  */
-export const AddBackgroundMenuItem = (menu) => {
+const AddBackgroundMenuItem = (menu) => {
     const openprefs_item = _('Rounded Corners Settings...');
     for (const item of menu._getMenuItems()) {
         if (item.label?.text === openprefs_item) {
@@ -76,7 +80,7 @@ export const AddBackgroundMenuItem = (menu) => {
         }
     }
     menu.addAction(openprefs_item, () => {
-        const extension = Extension.lookupByURL(import.meta.url);
+        const extension = Extension.lookupByURL(__dirname);
         try {
             extension.openPreferences();
         }
@@ -86,14 +90,14 @@ export const AddBackgroundMenuItem = (menu) => {
     });
 };
 /** Find all Background menu, then add extra item to it */
-export const SetupBackgroundMenu = () => {
+const SetupBackgroundMenu = () => {
     for (const _bg of global.windowGroup.firstChild.get_children()) {
         _log('Found Desktop Background obj', _bg);
         const menu = _bg._backgroundMenu;
         AddBackgroundMenuItem(menu);
     }
 };
-export const RestoreBackgroundMenu = () => {
+const RestoreBackgroundMenu = () => {
     const remove_menu_item = (menu) => {
         const items = menu._getMenuItems();
         const openprefs_item = _('Rounded Corners Settings...');
@@ -115,7 +119,7 @@ export const RestoreBackgroundMenu = () => {
  *
  * @param win - The window to get the settings for.
  */
-export function getRoundedCornersCfg(win) {
+function getRoundedCornersCfg(win) {
     const global_cfg = settings().global_rounded_corner_settings;
     const custom_cfg_list = settings().custom_rounded_corner_settings;
     const k = win.get_wm_class_instance();
@@ -133,7 +137,7 @@ export function getRoundedCornersCfg(win) {
  * @param win - The window to check.
  * @returns Whether the window should have rounded corners.
  */
-export function shouldEnableEffect(win) {
+function shouldEnableEffect(win) {
     // DING (Desktop Icons NG) is a extensions that create a gtk
     // application to show desktop grid on background, we need to
     // skip it coercively.
@@ -181,7 +185,7 @@ export function shouldEnableEffect(win) {
 /**
  * Get Rounded corners effect from a window actor
  */
-export function get_rounded_corners_effect(actor) {
+function get_rounded_corners_effect(actor) {
     const win = actor.metaWindow;
     const name = ROUNDED_CORNERS_EFFECT;
     return win.get_client_type() === Meta.WindowClientType.X11
